@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { validatePopulationOrder } from '@/lib/game/validators';
 import { generateQuestion } from '@/lib/game/generators';
+import { getRun, updateRun, createRun, type GameRun } from '@/lib/game/storage';
 
 const orderSchema = z.object({
   runId: z.string(),
@@ -9,23 +10,27 @@ const orderSchema = z.object({
   orderedIso3: z.array(z.string())
 });
 
-// 메모리 저장소 (실제론 Supabase에서 가져옴)
-const runs = new Map<string, any>();
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { runId, mode, orderedIso3 } = orderSchema.parse(body);
 
-    // Run 조회 (실제론 Supabase에서)
-    const run = runs.get(runId) || {
-      runId,
-      mode,
-      score: 0,
-      attemptsLeft: 3,
-      usedIso3: [],
-      status: 'active'
-    };
+    // Run 조회
+    let run = getRun(runId);
+    
+    if (!run) {
+      // Run이 없으면 새로 생성 (fallback)
+      run = {
+        runId,
+        mode,
+        score: 0,
+        attemptsLeft: 3,
+        usedIso3: [],
+        status: 'active',
+        question: null
+      } as GameRun;
+      createRun(run);
+    }
 
     if (run.status === 'ended') {
       return NextResponse.json(
@@ -50,7 +55,7 @@ export async function POST(request: NextRequest) {
       const nextQuestion = generateQuestion(mode, newUsed);
       run.question = nextQuestion;
 
-      runs.set(runId, run);
+      updateRun(runId, run);
 
       return NextResponse.json({
         correct: true,
@@ -66,7 +71,7 @@ export async function POST(request: NextRequest) {
       if (run.attemptsLeft <= 0) {
         // 게임 종료
         run.status = 'ended';
-        runs.set(runId, run);
+        updateRun(runId, run);
 
         return NextResponse.json({
           correct: false,
@@ -78,7 +83,7 @@ export async function POST(request: NextRequest) {
       }
 
       // 같은 질문 유지
-      runs.set(runId, run);
+      updateRun(runId, run);
 
       return NextResponse.json({
         correct: false,

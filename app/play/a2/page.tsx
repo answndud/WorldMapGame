@@ -204,21 +204,21 @@ export default function ModeA2Page() {
 
   if (loading || !gameState) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">게임을 준비하는 중...</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center">
+        <div className="text-slate-900 dark:text-white text-xl">게임을 준비하는 중...</div>
       </div>
     );
   }
 
   if (gameState.status === 'ended') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <ScoreHeader score={gameState.score} attemptsLeft={gameState.attemptsLeft} />
         <div className="container mx-auto px-4 py-20">
-          <Card className="max-w-md mx-auto p-8 text-center bg-slate-800/50 border-slate-700">
+          <Card className="max-w-md mx-auto p-8 text-center bg-white dark:bg-slate-800/50 border-slate-300 dark:border-slate-700">
             <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-white mb-2">게임 종료</h2>
-            <p className="text-slate-300 mb-2">최종 점수</p>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">게임 종료</h2>
+            <p className="text-slate-700 dark:text-slate-300 mb-2">최종 점수</p>
             <p className="text-5xl font-bold text-yellow-400 mb-6">{gameState.score}점</p>
             <div className="flex gap-3">
               <Button onClick={() => startGame()} className="flex-1 bg-blue-600 hover:bg-blue-700">
@@ -242,7 +242,7 @@ export default function ModeA2Page() {
   const isStep2 = gameState.question.step === 'clickCapital';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <ScoreHeader
         score={gameState.score}
         attemptsLeft={gameState.attemptsLeft}
@@ -253,14 +253,14 @@ export default function ModeA2Page() {
         <div className="max-w-4xl mx-auto">
           {/* 게임 설명 */}
           <Card className="p-6 mb-6 bg-blue-500/10 border-blue-500/30">
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               수도 맞추기 게임 - Level 2
             </h2>
-            <p className="text-slate-300 mb-2">
+            <p className="text-slate-700 dark:text-slate-300 mb-2">
               <MapPin className="inline w-5 h-5 mr-1 text-blue-400" />
               수도: <span className="font-bold text-blue-400 text-xl">{gameState.question.capitalName}</span>
             </p>
-            <div className="space-y-1 text-sm text-slate-400">
+            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
               <p>• Step 1: 이 수도가 속한 국가를 선택하세요 (+5점)</p>
               <p>• Step 2: 2D 지도에서 수도의 정확한 위치를 클릭하세요 (+10점)</p>
             </div>
@@ -269,7 +269,7 @@ export default function ModeA2Page() {
           {/* Step 1: 국가 선택 */}
           {isStep1 && (
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
                 Step 1: 국가 선택
               </h3>
               <CountrySelect
@@ -291,10 +291,10 @@ export default function ModeA2Page() {
           {/* Step 2: 수도 위치 클릭 */}
           {isStep2 && (
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
                 Step 2: 수도 위치 클릭
               </h3>
-              <p className="text-slate-300">
+              <p className="text-slate-700 dark:text-slate-300">
                 지도를 클릭하여 <span className="font-bold text-blue-400">{gameState.question.capitalName}</span>의 위치를 표시하세요.
               </p>
               <CountryMap2D

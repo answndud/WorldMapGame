@@ -144,24 +144,24 @@ export default function ModeB1Page() {
 
   if (loading || !gameState) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">게임을 준비하는 중...</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center">
+        <div className="text-slate-900 dark:text-white text-xl">게임을 준비하는 중...</div>
       </div>
     );
   }
 
   if (gameState.status === 'ended') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <ScoreHeader
           score={gameState.score}
           attemptsLeft={gameState.attemptsLeft}
         />
         <div className="container mx-auto px-4 py-20">
-          <Card className="max-w-md mx-auto p-8 text-center bg-slate-800/50 border-slate-700">
+          <Card className="max-w-md mx-auto p-8 text-center bg-white dark:bg-slate-800/50 border-slate-300 dark:border-slate-700">
             <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-white mb-2">게임 종료</h2>
-            <p className="text-slate-300 mb-2">최종 점수</p>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">게임 종료</h2>
+            <p className="text-slate-700 dark:text-slate-300 mb-2">최종 점수</p>
             <p className="text-5xl font-bold text-yellow-400 mb-6">
               {gameState.score}점
             </p>
@@ -187,7 +187,7 @@ export default function ModeB1Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <ScoreHeader
         score={gameState.score}
         attemptsLeft={gameState.attemptsLeft}
@@ -198,10 +198,10 @@ export default function ModeB1Page() {
         <div className="max-w-2xl mx-auto">
           {/* 게임 설명 */}
           <Card className="p-6 mb-6 bg-purple-500/10 border-purple-500/30">
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               인구수 정렬 게임 - Level 1
             </h2>
-            <p className="text-slate-300">
+            <p className="text-slate-700 dark:text-slate-300">
               아래 3개 국가를 <span className="font-bold text-purple-400">인구가 많은 순서대로</span> 드래그하여 정렬하세요.
             </p>
           </Card>

@@ -1,23 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { generateQuestion, type GameMode } from '@/lib/game/generators';
+import { generateQuestion } from '@/lib/game/generators';
+import { createRun, getRun, type GameRun } from '@/lib/game/storage';
 
 const startRunSchema = z.object({
   mode: z.enum(['A1', 'A2', 'B1', 'B2', 'C'])
 });
-
-export interface GameRun {
-  runId: string;
-  mode: GameMode;
-  score: number;
-  attemptsLeft: number;
-  question: any;
-  usedIso3: string[];
-  status: 'active' | 'ended';
-}
-
-// 메모리 저장소 (실제 운영시엔 Supabase 사용)
-const runs = new Map<string, GameRun>();
 
 export async function POST(request: NextRequest) {
   try {
@@ -37,7 +25,7 @@ export async function POST(request: NextRequest) {
       status: 'active'
     };
 
-    runs.set(runId, run);
+    createRun(run);
 
     return NextResponse.json({
       runId,
@@ -66,7 +54,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'runId required' }, { status: 400 });
   }
 
-  const run = runs.get(runId);
+  const run = getRun(runId);
   
   if (!run) {
     return NextResponse.json({ error: 'Run not found' }, { status: 404 });
@@ -80,13 +68,4 @@ export async function GET(request: NextRequest) {
     question: run.question,
     status: run.status
   });
-}
-
-// Helper function to get and update runs
-export function getRunFromMemory(runId: string): GameRun | undefined {
-  return runs.get(runId);
-}
-
-export function updateRunInMemory(runId: string, run: GameRun): void {
-  runs.set(runId, run);
 }

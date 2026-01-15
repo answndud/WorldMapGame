@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getCountryByCapital } from '@/lib/datasets/countries';
+import { getRun, updateRun } from '@/lib/game/storage';
 
 const countryAnswerSchema = z.object({
   runId: z.string(),
@@ -8,15 +9,12 @@ const countryAnswerSchema = z.object({
   pickedIso3: z.string()
 });
 
-// 메모리 저장소
-const runs = new Map<string, any>();
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { runId, capitalName, pickedIso3 } = countryAnswerSchema.parse(body);
 
-    const run = runs.get(runId);
+    const run = getRun(runId);
     if (!run) {
       return NextResponse.json({ error: 'Run not found' }, { status: 404 });
     }
@@ -33,7 +31,7 @@ export async function POST(request: NextRequest) {
       // Step 1 정답: +5점, Step 2로 진행
       run.score += 5;
       run.question.step = 'clickCapital';
-      runs.set(runId, run);
+      updateRun(runId, run);
 
       return NextResponse.json({
         correct: true,
@@ -49,7 +47,7 @@ export async function POST(request: NextRequest) {
 
       if (run.attemptsLeft <= 0) {
         run.status = 'ended';
-        runs.set(runId, run);
+        updateRun(runId, run);
 
         return NextResponse.json({
           correct: false,
@@ -60,7 +58,7 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      runs.set(runId, run);
+      updateRun(runId, run);
 
       return NextResponse.json({
         correct: false,

@@ -139,8 +139,8 @@ export default function ModeB2Page() {
 
   if (loading || !gameState) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">게임을 준비하는 중...</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center">
+        <div className="text-slate-900 dark:text-white text-xl">게임을 준비하는 중...</div>
       </div>
     );
   }
@@ -182,7 +182,7 @@ export default function ModeB2Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <ScoreHeader
         score={gameState.score}
         attemptsLeft={gameState.attemptsLeft}
@@ -192,10 +192,10 @@ export default function ModeB2Page() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <Card className="p-6 mb-6 bg-purple-500/10 border-purple-500/30">
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               인구수 정렬 게임 - Level 2
             </h2>
-            <p className="text-slate-300">
+            <p className="text-slate-700 dark:text-slate-300">
               아래 5개 국가를 <span className="font-bold text-purple-400">인구가 많은 순서대로</span> 드래그하여 정렬하세요.
             </p>
           </Card>

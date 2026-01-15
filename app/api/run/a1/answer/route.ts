@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { validateCountryClick } from '@/lib/game/validators';
 import { generateQuestion } from '@/lib/game/generators';
+import { getRun, updateRun } from '@/lib/game/storage';
 
 const answerSchema = z.object({
   runId: z.string(),
@@ -9,15 +10,12 @@ const answerSchema = z.object({
   clickedIso3: z.string()
 });
 
-// 메모리 저장소
-const runs = new Map<string, any>();
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { runId, targetIso3, clickedIso3 } = answerSchema.parse(body);
 
-    const run = runs.get(runId);
+    const run = getRun(runId);
     if (!run) {
       return NextResponse.json({ error: 'Run not found' }, { status: 404 });
     }
@@ -39,7 +37,7 @@ export async function POST(request: NextRequest) {
       const nextQuestion = generateQuestion('A1', newUsed);
       run.question = nextQuestion;
 
-      runs.set(runId, run);
+      updateRun(runId, run);
 
       return NextResponse.json({
         correct: true,
@@ -55,7 +53,7 @@ export async function POST(request: NextRequest) {
       if (run.attemptsLeft <= 0) {
         // 게임 종료
         run.status = 'ended';
-        runs.set(runId, run);
+        updateRun(runId, run);
 
         return NextResponse.json({
           correct: false,
@@ -68,7 +66,7 @@ export async function POST(request: NextRequest) {
       }
 
       // 같은 질문 유지
-      runs.set(runId, run);
+      updateRun(runId, run);
 
       return NextResponse.json({
         correct: false,

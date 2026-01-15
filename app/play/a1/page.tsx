@@ -155,21 +155,21 @@ export default function ModeA1Page() {
 
   if (loading || !gameState) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">게임을 준비하는 중...</div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center">
+        <div className="text-slate-900 dark:text-white text-xl">게임을 준비하는 중...</div>
       </div>
     );
   }
 
   if (gameState.status === 'ended') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <ScoreHeader score={gameState.score} attemptsLeft={gameState.attemptsLeft} />
         <div className="container mx-auto px-4 py-20">
-          <Card className="max-w-md mx-auto p-8 text-center bg-slate-800/50 border-slate-700">
+          <Card className="max-w-md mx-auto p-8 text-center bg-white dark:bg-slate-800/50 border-slate-300 dark:border-slate-700">
             <XCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-white mb-2">게임 종료</h2>
-            <p className="text-slate-300 mb-2">최종 점수</p>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">게임 종료</h2>
+            <p className="text-slate-700 dark:text-slate-300 mb-2">최종 점수</p>
             <p className="text-5xl font-bold text-yellow-400 mb-6">{gameState.score}점</p>
             <div className="flex gap-3">
               <Button onClick={() => startGame()} className="flex-1 bg-blue-600 hover:bg-blue-700">
@@ -190,7 +190,7 @@ export default function ModeA1Page() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <ScoreHeader
         score={gameState.score}
         attemptsLeft={gameState.attemptsLeft}
@@ -201,30 +201,30 @@ export default function ModeA1Page() {
         <div className="max-w-5xl mx-auto">
           {/* 게임 설명 */}
           <Card className="p-6 mb-6 bg-blue-500/10 border-blue-500/30">
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               3D 지구본 국가 찾기 - Level 1
             </h2>
             <div className="flex items-center gap-3 mb-3">
               <GlobeIcon className="w-6 h-6 text-blue-400" />
               <div className="flex items-center gap-3">
-                <span className="text-slate-300">찾아야 할 국가:</span>
+                <span className="text-slate-700 dark:text-slate-300">찾아야 할 국가:</span>
                 <div className="flex items-center gap-3 bg-blue-500/20 px-4 py-2 rounded-lg">
                   <span className="text-4xl">{getFlagEmoji(gameState.question.targetIso3)}</span>
                   <div>
-                    <span className="font-bold text-blue-400 text-2xl">
+                    <span className="font-bold text-blue-600 dark:text-blue-400 text-2xl">
                       {gameState.question.targetNameKo}
                     </span>
-                    <span className="text-slate-400 text-lg ml-2">
+                    <span className="text-slate-600 dark:text-slate-400 text-lg ml-2">
                       ({gameState.question.targetName})
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               • 지구본을 드래그하여 회전시키고, 흰색 점을 클릭하세요
             </p>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               • 정답: +10점 | 3번 틀리면 게임 종료
             </p>
           </Card>

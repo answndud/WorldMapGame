@@ -53,32 +53,34 @@ export default function GlobeCanvas({ targetIso3, onCountryClick }: GlobeCanvasP
   }
 
   return (
-    <div className="w-full h-[700px] bg-black rounded-lg overflow-hidden border-2 border-blue-500 relative">
-      <Globe
-        ref={globeEl}
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        backgroundColor="rgba(0,0,0,1)"
-        width={typeof window !== 'undefined' ? window.innerWidth * 0.9 : 1200}
-        height={700}
-        
-        // 포인트로 국가 표시
-        pointsData={polygonsData}
-        pointLat="lat"
-        pointLng="lng"
-        pointAltitude={0.01}
-        pointRadius={0.6}
-        pointColor={() => 'rgba(255, 255, 255, 0.8)'}
-        pointLabel={() => ''}  // 호버 시 라벨 제거
-        
-        onPointClick={(point: any) => {
-          onCountryClick(point.iso3);
-        }}
-        
-        onGlobeReady={() => setGlobeReady(true)}
-        
-        // 인터랙션 설정
-        enablePointerInteraction={true}
-      />
+    <div className="w-full h-[700px] bg-black rounded-lg overflow-hidden border-2 border-blue-500 relative flex items-center justify-center">
+      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Globe
+          ref={globeEl}
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+          backgroundColor="rgba(0,0,0,1)"
+          width={700}
+          height={700}
+          
+          // 포인트로 국가 표시
+          pointsData={polygonsData}
+          pointLat="lat"
+          pointLng="lng"
+          pointAltitude={0.01}
+          pointRadius={0.6}
+          pointColor={() => 'rgba(255, 255, 255, 0.8)'}
+          pointLabel={() => ''}  // 호버 시 라벨 제거
+          
+          onPointClick={(point: any) => {
+            onCountryClick(point.iso3);
+          }}
+          
+          onGlobeReady={() => setGlobeReady(true)}
+          
+          // 인터랙션 설정
+          enablePointerInteraction={true}
+        />
+      </div>
     </div>
   );
 }
