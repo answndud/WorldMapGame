@@ -14,6 +14,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from '@/components/ui/dialog';
 import { countries } from '@/lib/datasets/countries';
 
@@ -61,6 +62,7 @@ export default function CountrySelect({ value, onChange, placeholder = '국가�
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-md p-0 bg-slate-800 border-slate-700">
+          <DialogTitle className="sr-only">국가 선택</DialogTitle>
           <Command className="bg-slate-800 border-slate-700">
             <CommandInput
               placeholder="국가 검색..."
