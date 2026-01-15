@@ -38,29 +38,29 @@ export default function GlobeCanvas({ targetIso3, onCountryClick }: GlobeCanvasP
         altitude: 2.0 
       }, 1000);
       
-      // 자동 회전 활성화 (느리게)
-      globeEl.current.controls().autoRotate = true;
-      globeEl.current.controls().autoRotateSpeed = 0.5;
+      // 자동 회전 비활성화 (드래그로만 회전)
+      globeEl.current.controls().autoRotate = false;
+      globeEl.current.controls().enableZoom = true;
     }
   }, [globeReady]);
 
   if (!mounted) {
     return (
-      <div className="w-full h-[700px] bg-black rounded-lg flex items-center justify-center">
+      <div className="w-full h-[800px] bg-black rounded-lg flex items-center justify-center">
         <p className="text-slate-400">3D 지구본을 로딩하는 중...</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-[700px] bg-black rounded-lg overflow-hidden border-2 border-blue-500 relative flex items-center justify-center">
+    <div className="w-full h-[800px] bg-black rounded-lg overflow-hidden border-2 border-blue-500 relative flex items-center justify-center">
       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Globe
           ref={globeEl}
           globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
           backgroundColor="rgba(0,0,0,1)"
-          width={700}
-          height={700}
+          width={800}
+          height={800}
           
           // 포인트로 국가 표시
           pointsData={polygonsData}

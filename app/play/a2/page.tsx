@@ -252,13 +252,13 @@ export default function ModeA2Page() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* 게임 설명 */}
-          <Card className="p-6 mb-6 bg-blue-500/10 border-blue-500/30">
+          <Card className="p-6 mb-6 bg-blue-50 dark:bg-blue-500/10 border-2 border-blue-300 dark:border-blue-500/30">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               수도 맞추기 게임 - Level 2
             </h2>
             <p className="text-slate-700 dark:text-slate-300 mb-2">
-              <MapPin className="inline w-5 h-5 mr-1 text-blue-400" />
-              수도: <span className="font-bold text-blue-400 text-xl">{gameState.question.capitalName}</span>
+              <MapPin className="inline w-5 h-5 mr-1 text-blue-600 dark:text-blue-400" />
+              수도: <span className="font-bold text-blue-700 dark:text-blue-400 text-xl">{gameState.question.capitalName}</span>
             </p>
             <div className="space-y-1 text-sm text-slate-600 dark:text-slate-400">
               <p>• Step 1: 이 수도가 속한 국가를 선택하세요 (+5점)</p>

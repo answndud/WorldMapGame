@@ -200,18 +200,18 @@ export default function ModeA1Page() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto">
           {/* 게임 설명 */}
-          <Card className="p-6 mb-6 bg-blue-500/10 border-blue-500/30">
+          <Card className="p-6 mb-6 bg-blue-50 dark:bg-blue-500/10 border-2 border-blue-300 dark:border-blue-500/30">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               3D 지구본 국가 찾기 - Level 1
             </h2>
             <div className="flex items-center gap-3 mb-3">
-              <GlobeIcon className="w-6 h-6 text-blue-400" />
+              <GlobeIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
               <div className="flex items-center gap-3">
-                <span className="text-slate-700 dark:text-slate-300">찾아야 할 국가:</span>
-                <div className="flex items-center gap-3 bg-blue-500/20 px-4 py-2 rounded-lg">
+                <span className="text-slate-700 dark:text-slate-300 font-semibold">찾아야 할 국가:</span>
+                <div className="flex items-center gap-3 bg-blue-100 dark:bg-blue-500/20 px-4 py-2 rounded-lg border-2 border-blue-300 dark:border-blue-500/50">
                   <span className="text-4xl">{getFlagEmoji(gameState.question.targetIso3)}</span>
                   <div>
-                    <span className="font-bold text-blue-600 dark:text-blue-400 text-2xl">
+                    <span className="font-bold text-blue-700 dark:text-blue-400 text-2xl">
                       {gameState.question.targetNameKo}
                     </span>
                     <span className="text-slate-600 dark:text-slate-400 text-lg ml-2">

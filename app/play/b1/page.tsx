@@ -197,12 +197,12 @@ export default function ModeB1Page() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           {/* 게임 설명 */}
-          <Card className="p-6 mb-6 bg-purple-500/10 border-purple-500/30">
+          <Card className="p-6 mb-6 bg-purple-50 dark:bg-purple-500/10 border-2 border-purple-300 dark:border-purple-500/30">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
               인구수 정렬 게임 - Level 1
             </h2>
             <p className="text-slate-700 dark:text-slate-300">
-              아래 3개 국가를 <span className="font-bold text-purple-400">인구가 많은 순서대로</span> 드래그하여 정렬하세요.
+              아래 3개 국가를 <span className="font-bold text-purple-700 dark:text-purple-400">인구가 많은 순서대로</span> 드래그하여 정렬하세요.
             </p>
           </Card>
 
