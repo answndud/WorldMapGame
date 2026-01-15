@@ -2,6 +2,7 @@
 
 import { Trophy, Heart, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import Link from 'next/link';
 
 interface ScoreHeaderProps {
@@ -27,6 +28,7 @@ export default function ScoreHeader({ score, attemptsLeft, onEndRun }: ScoreHead
           </div>
         </div>
         <div className="flex gap-2">
+          <ThemeToggle />
           {onEndRun && (
             <Button
               variant="outline"

@@ -92,12 +92,17 @@ export default function ModeB2Page() {
           description: '+20점'
         });
         
+        // 다음 질문으로 업데이트
+        const newQuestion = data.question;
         setGameState({
           ...gameState,
           score: data.score,
-          question: data.question
+          question: newQuestion
         });
-        setCurrentOrder(data.question.items.map((item: any) => item.iso3));
+        
+        // 새로운 질문의 국가 순서로 currentOrder 업데이트
+        const newOrder = newQuestion.items.map((item: any) => item.iso3);
+        setCurrentOrder(newOrder);
       } else {
         toast.error('틀렸습니다 ❌', {
           description: `남은 기회: ${data.attemptsLeft}`

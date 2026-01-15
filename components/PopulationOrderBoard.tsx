@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import * as React from 'react';
 import {
   DndContext,
   closestCenter,
@@ -75,6 +76,11 @@ export default function PopulationOrderBoard({
   onOrderChange,
 }: PopulationOrderBoardProps) {
   const [items, setItems] = useState(countries);
+  
+  // countries prop이 변경되면 items 업데이트
+  React.useEffect(() => {
+    setItems(countries);
+  }, [countries]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),

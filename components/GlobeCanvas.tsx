@@ -20,50 +20,55 @@ export default function GlobeCanvas({ targetIso3, onCountryClick }: GlobeCanvasP
     setMounted(true);
   }, []);
 
-  // 국가 폴리곤 데이터 생성 (간단한 예시)
+  // 국가 폴리곤 데이터 생성
   const polygonsData = countries.map(country => ({
     iso3: country.iso3,
     name: country.name_en,
+    nameKo: country.name_ko,
     lat: (country.bbox[1] + country.bbox[3]) / 2,
     lng: (country.bbox[0] + country.bbox[2]) / 2,
-    // 실제 구현에서는 GeoJSON을 사용해야 함
   }));
 
   useEffect(() => {
     if (globeEl.current && globeReady) {
-      // 카메라 초기 설정
-      globeEl.current.pointOfView({ altitude: 2.5 }, 1000);
+      // 카메라 초기 설정 - 지구본 전체가 보이도록 거리 조정
+      globeEl.current.pointOfView({ 
+        lat: 20, 
+        lng: 0, 
+        altitude: 2.0 
+      }, 1000);
+      
+      // 자동 회전 활성화 (느리게)
+      globeEl.current.controls().autoRotate = true;
+      globeEl.current.controls().autoRotateSpeed = 0.5;
     }
   }, [globeReady]);
 
   if (!mounted) {
     return (
-      <div className="w-full h-[600px] bg-black rounded-lg flex items-center justify-center">
+      <div className="w-full h-[700px] bg-black rounded-lg flex items-center justify-center">
         <p className="text-slate-400">3D 지구본을 로딩하는 중...</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-[600px] bg-black rounded-lg overflow-hidden border-2 border-blue-500">
+    <div className="w-full h-[700px] bg-black rounded-lg overflow-hidden border-2 border-blue-500 relative">
       <Globe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        backgroundColor="rgba(0,0,0,0)"
+        backgroundColor="rgba(0,0,0,1)"
+        width={typeof window !== 'undefined' ? window.innerWidth * 0.9 : 1200}
+        height={700}
         
-        // 포인트로 국가 표시 (실제로는 폴리곤 사용)
+        // 포인트로 국가 표시
         pointsData={polygonsData}
         pointLat="lat"
         pointLng="lng"
         pointAltitude={0.01}
-        pointRadius={0.5}
-        pointColor={() => '#ffffff'}
-        pointLabel={(d: any) => `
-          <div style="background: rgba(0,0,0,0.8); padding: 8px; border-radius: 4px; color: white;">
-            <strong>${d.name}</strong><br/>
-            ${d.iso3}
-          </div>
-        `}
+        pointRadius={0.6}
+        pointColor={() => 'rgba(255, 255, 255, 0.8)'}
+        pointLabel={() => ''}  // 호버 시 라벨 제거
         
         onPointClick={(point: any) => {
           onCountryClick(point.iso3);

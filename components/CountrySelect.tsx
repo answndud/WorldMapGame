@@ -29,14 +29,16 @@ export default function CountrySelect({ value, onChange, placeholder = '국가�
 
   const selectedCountry = countries.find((c) => c.iso3 === value);
 
-  const filteredCountries = countries.filter((country) => {
-    const searchLower = search.toLowerCase();
-    return (
-      country.name_en.toLowerCase().includes(searchLower) ||
-      country.name_ko.includes(search) ||
-      country.iso3.toLowerCase().includes(searchLower)
-    );
-  });
+  const filteredCountries = countries
+    .filter((country) => {
+      const searchLower = search.toLowerCase();
+      return (
+        country.name_en.toLowerCase().includes(searchLower) ||
+        country.name_ko.includes(search) ||
+        country.iso3.toLowerCase().includes(searchLower)
+      );
+    })
+    .sort((a, b) => a.name_ko.localeCompare(b.name_ko, 'ko'));
 
   return (
     <>

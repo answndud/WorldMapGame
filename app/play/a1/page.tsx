@@ -9,6 +9,28 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { XCircle, Globe as GlobeIcon } from 'lucide-react';
 
+// ISO3 코드를 국기 이모지로 변환
+function getFlagEmoji(iso3: string): string {
+  const iso2Map: { [key: string]: string } = {
+    'USA': 'US', 'CHN': 'CN', 'IND': 'IN', 'IDN': 'ID', 'PAK': 'PK',
+    'BRA': 'BR', 'NGA': 'NG', 'BGD': 'BD', 'RUS': 'RU', 'MEX': 'MX',
+    'JPN': 'JP', 'ETH': 'ET', 'PHL': 'PH', 'EGY': 'EG', 'VNM': 'VN',
+    'COD': 'CD', 'TUR': 'TR', 'IRN': 'IR', 'DEU': 'DE', 'THA': 'TH',
+    'GBR': 'GB', 'FRA': 'FR', 'ITA': 'IT', 'ZAF': 'ZA', 'TZA': 'TZ',
+    'MMR': 'MM', 'KOR': 'KR', 'COL': 'CO', 'ESP': 'ES', 'KEN': 'KE',
+    'ARG': 'AR', 'DZA': 'DZ', 'SDN': 'SD', 'UGA': 'UG', 'CAN': 'CA',
+    'POL': 'PL', 'IRQ': 'IQ', 'MAR': 'MA', 'SAU': 'SA', 'AUS': 'AU',
+    'PER': 'PE', 'MYS': 'MY', 'VEN': 'VE', 'NPL': 'NP', 'GHA': 'GH',
+    'YEM': 'YE', 'MOZ': 'MZ', 'CHL': 'CL', 'NLD': 'NL', 'GRC': 'GR',
+    'PRT': 'PT', 'SWE': 'SE', 'CHE': 'CH', 'SGP': 'SG'
+  };
+  
+  const iso2 = iso2Map[iso3] || iso3.slice(0, 2);
+  return String.fromCodePoint(
+    ...[...iso2].map(c => 127397 + c.charCodeAt(0))
+  );
+}
+
 const GlobeCanvas = dynamic(() => import('@/components/GlobeCanvas'), {
   ssr: false,
   loading: () => (
@@ -182,18 +204,25 @@ export default function ModeA1Page() {
             <h2 className="text-2xl font-bold text-white mb-2">
               3D 지구본 국가 찾기 - Level 1
             </h2>
-            <p className="text-slate-300 mb-3">
-              <GlobeIcon className="inline w-5 h-5 mr-1 text-blue-400" />
-              찾아야 할 국가: 
-              <span className="font-bold text-blue-400 text-2xl ml-2">
-                {gameState.question.targetNameKo}
-              </span>
-              <span className="text-slate-400 text-lg ml-2">
-                ({gameState.question.targetName})
-              </span>
-            </p>
+            <div className="flex items-center gap-3 mb-3">
+              <GlobeIcon className="w-6 h-6 text-blue-400" />
+              <div className="flex items-center gap-3">
+                <span className="text-slate-300">찾아야 할 국가:</span>
+                <div className="flex items-center gap-3 bg-blue-500/20 px-4 py-2 rounded-lg">
+                  <span className="text-4xl">{getFlagEmoji(gameState.question.targetIso3)}</span>
+                  <div>
+                    <span className="font-bold text-blue-400 text-2xl">
+                      {gameState.question.targetNameKo}
+                    </span>
+                    <span className="text-slate-400 text-lg ml-2">
+                      ({gameState.question.targetName})
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <p className="text-sm text-slate-400">
-              • 지구본을 드래그하여 회전시키고, 국가를 클릭하세요
+              • 지구본을 드래그하여 회전시키고, 흰색 점을 클릭하세요
             </p>
             <p className="text-sm text-slate-400">
               • 정답: +10점 | 3번 틀리면 게임 종료
